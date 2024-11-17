@@ -1,15 +1,14 @@
-package com.project.reshmotion.entities;
+package com.project.resh_motion.entities;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.lang.reflect.Array;
-
-@Document(collection = "cars")
+@Entity
+@Table(name = "cars")
 @Data
 public class Cars {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String brand;
     private String model;

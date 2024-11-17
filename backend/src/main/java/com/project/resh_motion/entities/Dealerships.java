@@ -1,13 +1,14 @@
-package com.project.reshmotion.entities;
+package com.project.resh_motion.entities;
 
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "dealerships")
+@Entity
+@Table(name = "dealerships")
 @Data
 public class Dealerships {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String city;
     private String district;

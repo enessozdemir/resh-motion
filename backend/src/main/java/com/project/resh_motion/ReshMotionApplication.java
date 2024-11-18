@@ -10,5 +10,4 @@ public class ReshMotionApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ReshMotionApplication.class, args);
 	}
-
 }

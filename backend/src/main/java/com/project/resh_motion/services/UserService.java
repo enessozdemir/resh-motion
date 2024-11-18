@@ -1,6 +1,8 @@
 package com.project.resh_motion.services;
 
 
+import com.project.resh_motion.dto.SignInRequest;
+import com.project.resh_motion.dto.UserResponse;
 import com.project.resh_motion.entities.User;
 import com.project.resh_motion.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +27,26 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User signUp(User user) {
+    public UserResponse signUp(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        return userRepository.save(user);
+        userRepository.save(user);
+        return new UserResponse(user.getName(), user.getEmail());
+    }
+
+    public UserResponse signIn(SignInRequest signInRequest) {
+        User loginUser = userRepository.findByEmail(signInRequest.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found!"));
+        if (!passwordEncoder.matches(signInRequest.getPassword(), loginUser.getPassword())) {
+            throw new RuntimeException("Invalid email or password!");
+        }
+
+        return new UserResponse(loginUser.getName(), loginUser.getEmail());
     }
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
+
+
 }

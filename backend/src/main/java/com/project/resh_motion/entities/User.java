@@ -14,11 +14,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
     private String phone_number;
     private String address;
+    @Column(nullable = false)
     private String user_role;
     @CreatedDate
     private LocalDateTime createdAt;

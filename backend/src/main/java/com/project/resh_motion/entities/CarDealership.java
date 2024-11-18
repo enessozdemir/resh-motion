@@ -1,6 +1,5 @@
 package com.project.resh_motion.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.OnDelete;
@@ -9,7 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 @Entity
 @Table(name = "car_dealerships")
 @Data
-public class CarDealerships {
+public class CarDealership {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,12 +16,12 @@ public class CarDealerships {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "car_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Cars car;
+    private Car car;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "dealership_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Dealerships dealership;
+    private Dealership dealership;
 
     private String availabilityStatus;
 

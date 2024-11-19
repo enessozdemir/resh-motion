@@ -1,3 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Gabarito:wght@400..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+*{
+    font-family: 'Gabarito', sans-serif;
+}
+
+@font-face {
+    font-family: 'Airone';
+    src: url('./assets/fonts/AironeFont.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+

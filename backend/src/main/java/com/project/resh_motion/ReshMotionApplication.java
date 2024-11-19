@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan({ "package com.project.resh_motion.*" })
 public class ReshMotionApplication {
 
 	public static void main(String[] args) {

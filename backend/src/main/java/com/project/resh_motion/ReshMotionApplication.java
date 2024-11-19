@@ -3,8 +3,10 @@ package com.project.resh_motion;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
-@SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+@SpringBootApplication
+@ComponentScan({ "package com.project.resh_motion.*" })
 public class ReshMotionApplication {
 
 	public static void main(String[] args) {

@@ -25,19 +25,19 @@ export default function Navbar() {
         </Link>
 
         {/* Hamburger Menü */}
-        <div className="sm:hidden block relative">
-          {isOpen ? (
-            <IoClose
-              className="text-4xl text-black cursor-pointer"
-              onClick={toggleMenu}
-            />
-          ) : (
-            <RxHamburgerMenu
-              onClick={toggleMenu}
-              size={25}
-              className="text-black cursor-pointer"
-            />
-          )}
+        <div className="sm:hidden block relative" onClick={toggleMenu}>
+          <div className="flex flex-col gap-2 items-center justify-center w-8 h-8 cursor-pointer">
+            <span
+              className={`block w-5 h-0.5 rounded-full bg-icon-color transform transition-transform duration-300 ease-in-out ${
+                isOpen && "rotate-45 translate-y-1"
+              }`}
+            ></span>
+            <span
+              className={`block w-5 h-0.5 rounded-full bg-icon-color transform transition-transform duration-300 ease-in-out ${
+                isOpen && "-rotate-45 -translate-y-1.5"
+              }`}
+            ></span>
+          </div>
         </div>
 
         {/* Desktop Menü */}

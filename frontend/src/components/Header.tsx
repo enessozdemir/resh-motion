@@ -1,6 +1,4 @@
 import { Link, useLocation } from "react-router-dom";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
 
 export default function Navbar() {

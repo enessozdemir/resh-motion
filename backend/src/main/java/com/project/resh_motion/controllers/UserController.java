@@ -34,12 +34,12 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/sign-up")
+    @PostMapping("/auth/sign-up")
     private ResponseEntity<String> signUp(@RequestBody User user) {
         return ResponseEntity.ok(userService.signUp(user));
     }
 
-    @PostMapping("/sign-in")
+    @PostMapping("/auth/sign-in")
     public ResponseEntity<LoginResponse> signIn(@Valid @RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = userService.signIn(loginUserDto);
         String jwtToken = jwtService.generateToken((UserDetails) authenticatedUser);

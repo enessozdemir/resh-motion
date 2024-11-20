@@ -15,6 +15,7 @@ function App() {
     <div>
       {!hideHeaderAndFooter && <Header />}
       <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />

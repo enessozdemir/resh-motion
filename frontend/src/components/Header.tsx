@@ -1,13 +1,47 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
+
+  const toggleMenu = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
   return (
-    <div className="sticky h-16 px-5 flex items-center border-b tracking-normal">
-      <div className="flex justify-between w-full">
-        <Link to="/" className="w-[15%]">
-          <h1 className="font-airone text-alt-black text-4xl">RESH.</h1>
+    <div className="fixed w-full h-16 px-5 flex items-center border-b tracking-normal overflow-x-hidden bg-white z-50">
+      <div className="flex justify-between items-center w-full">
+        <Link to="/home" className="w-[15%]">
+          <h1 className="font-airone text-alt-black text-3xl sm:text-4xl mt-1 sm:mt-0">
+            RESH.
+          </h1>
         </Link>
-        <div className="w-[60%] flex gap-5 justify-center items-center">
+
+        {/* Hamburger Menü */}
+        <div className="sm:hidden block relative">
+          {isOpen ? (
+            <IoClose
+              className="text-4xl text-black cursor-pointer"
+              onClick={toggleMenu}
+            />
+          ) : (
+            <RxHamburgerMenu
+              onClick={toggleMenu}
+              size={25}
+              className="text-black cursor-pointer"
+            />
+          )}
+        </div>
+
+        {/* Desktop Menü */}
+        <div className="w-[60%] hidden sm:flex justify-center items-center gap-5">
           <a
             className="text-center pt-2 w-20 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
             href=""
@@ -33,7 +67,72 @@ export default function Navbar() {
             İletişim
           </Link>
         </div>
-        <div className="w-[15%] flex gap-3">
+
+        {/* Mobile Menü */}
+        <aside
+          className={`transition-all ease-linear duration-500 fixed top-16 left-0 w-full bg-white ${
+            isOpen ? "h-full opacity-100" : "opacity-0 h-0"
+          } z-40 overflow-hidden`}
+        >
+          <div className="flex flex-col gap-y-10">
+            <ul className="flex flex-col gap-y-5 justify-start items-center h-full mt-24">
+              <Link
+                to="/home"
+                className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
+                  location.pathname === "/home" && "bg-gray-50"
+                }`}
+              >
+                Ana Sayfa
+              </Link>
+              <Link
+                to="/vehicles"
+                className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
+                  location.pathname === "/vehicles" && "bg-gray-50"
+                }`}
+              >
+                Araçlar
+              </Link>
+              <Link
+                to="/dealerships"
+                className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
+                  location.pathname === "/dealerships" && "bg-gray-50"
+                }`}
+              >
+                Bayiler
+              </Link>
+              <Link
+                to="/about"
+                className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
+                  location.pathname === "/about" && "bg-gray-50"
+                }`}
+              >
+                Hakkımızda
+              </Link>
+              <Link
+                to="/contact"
+                className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
+                  location.pathname === "/contact" && "bg-gray-50"
+                }`}
+              >
+                İletişim
+              </Link>
+            </ul>
+            <div className="flex justify-center gap-x-5">
+              <Link to="/sign-in">
+                <button className="w-24 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300">
+                  Giriş Yap
+                </button>
+              </Link>
+              <Link to="/">
+                <button className="w-32 h-10 rounded-full bg-brand-color text-white font-medium hover:shadow-lg transition-all ease-out duration-300">
+                  Araç Kirala
+                </button>
+              </Link>
+            </div>
+          </div>
+        </aside>
+
+        <div className="w-[15%] hidden sm:flex gap-3">
           <Link to="/sign-in">
             <button className="w-20 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300">
               Giriş Yap

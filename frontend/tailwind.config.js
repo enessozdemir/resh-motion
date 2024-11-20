@@ -16,7 +16,10 @@ export default {
       colors: {
         "brand-color": "#FF5252",
         "alt-black": "#141414",
-        "soft-black": "#151515"
+        "soft-black": "#151515",
+        "light-gray": '#818181',
+        "icon-color": '#b3b3b3',
+        "silver": "#CCCCCC",
       }
     },
   },

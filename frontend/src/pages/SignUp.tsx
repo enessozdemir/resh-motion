@@ -4,8 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearError } from "../redux/user/UserSlice";
 import { Alert } from "flowbite-react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
 import { CiCircleCheck, CiCircleRemove } from "react-icons/ci";
+import TextInput from "../components/Input/TextInput";
+import PasswordInput from "../components/Input/PasswordInput";
 
 interface SignUpForm {
   email: string;
@@ -113,8 +114,8 @@ export default function SignUp() {
         </Alert>
       )}
 
-      <div className="w-1/4 h-screen px-7 py-10 overflow-y-auto">
-        <h1 className="font-integral text-3xl sm:text-4xl">Resh.</h1>
+      <div className="w-full sm:w-1/4 h-screen px-7 py-10 overflow-y-auto">
+        <h1 className="font-integral text-4xl">Resh.</h1>
         <div className="flex flex-col gap-3 mt-10">
           <p className="text-3xl font-serif">Hesabınızı oluşturun </p>
           <p className="text-opacity-90 text-md font-semibold">
@@ -135,102 +136,76 @@ export default function SignUp() {
           </button>
         </div>
 
-        <div className="w-[92%] ml-3 opacity-40 mt-10 mb-5">
+        <div className="w-[92%] ml-3 opacity-40 mt-8 mb-5">
           <hr />
         </div>
 
         <div>
           <form onSubmit={handleSubmit} className="pb-1">
             <div>
-              <label className="text-sm font-bold" htmlFor="email">
-                Email
-              </label>
-              <input
-                className="px-2 ring-0 focus:ring-0 focus:outline-none mt-1 bg-transparent w-full h-11 border border-alt-black focus:border-alt-black rounded-lg"
-                name="email"
-                id="email"
-                type="email"
+              <TextInput
+                name={"email"}
+                id={"email"}
+                type={"email"}
                 value={loginForm.email}
-                onChange={handleChange}
+                handleChange={handleChange}
+                label="Email"
               />
             </div>
             <div className="mt-3">
-              <label className="text-sm font-bold" htmlFor="email">
-                Full Name
-              </label>
-              <input
-                className="px-2 ring-0 focus:ring-0 focus:outline-none mt-1 bg-transparent w-full h-11 border border-alt-black focus:border-alt-black rounded-lg"
-                name="name"
-                id="name"
-                type="text"
+              <TextInput
+                name={"name"}
+                id={"name"}
+                type={"text"}
                 value={loginForm.name}
-                onChange={handleChange}
+                handleChange={handleChange}
+                label="Full Name"
               />
             </div>
-            <div className="mt-3">
-              <label className="text-sm font-bold" htmlFor="password">
-                Şifre
-              </label>
-              <div className="flex justify-between ring-0 focus:ring-0 pr-2 mt-1 bg-transparent outline-none w-full h-11 border border-alt-black focus:border-alt-black rounded-lg">
-                <div className="flex flex-col w-full">
-                  <input
-                    className="px-2 w-[90%] rounded-lg ring-0 focus:ring-0 focus:outline-none border-none"
-                    name="password"
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    ref={passwordRef}
-                    onChange={handleChange}
-                  />
-                  <div className="mt-3">
-                    <div className="flex items-center gap-1">
-                      {passwordValid ? (
-                        <CiCircleCheck className="text-green-600" />
-                      ) : (
-                        <CiCircleRemove className="text-red-600" />
-                      )}
-                      <p
-                        className={`text-xs ${
-                          passwordValid ? "text-green-600" : "text-red-600"
-                        }`}
-                      >
-                        Şifreniz en az 8 karakter olmalıdır
-                      </p>
-                    </div>
-                  </div>
+            <div>
+              <PasswordInput
+                name={"password"}
+                id={"password"}
+                handleChange={handleChange}
+                handleClick={handleShowPassword}
+                showPassword={showPassword}
+                label="Şifre"
+              />
+              <div className="mt-2">
+                <div className="flex items-center gap-1">
+                  {passwordValid ? (
+                    <CiCircleCheck className="text-green-600" />
+                  ) : (
+                    <CiCircleRemove className="text-red-600" />
+                  )}
+                  <p
+                    className={`text-xs ${
+                      passwordValid ? "text-green-600" : "text-red-600"
+                    }`}
+                  >
+                    Şifreniz en az 8 karakter olmalıdır
+                  </p>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleShowPassword}
-                  className="focus:outline-none"
-                >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
-                </button>
               </div>
             </div>
-            <div className="mt-9">
-              <label className="text-sm font-bold" htmlFor="email">
-                Phone Number
-              </label>
-              <input
-                className="px-2 ring-0 focus:ring-0 focus:outline-none mt-1 bg-transparent w-full h-11 border border-alt-black focus:border-alt-black rounded-lg"
-                name="phone_number"
-                id="phone_number"
-                type="text"
+            <div className="mt-5">
+              <TextInput
+                name={"phone_number"}
+                id={"phone_number"}
+                type={"text"}
                 value={loginForm.phone_number}
-                onChange={handleChange}
+                handleChange={handleChange}
+                label="Phone Number"
               />
             </div>
             <div className="mt-3">
-              <label className="text-sm font-bold" htmlFor="email">
-                Address
-              </label>
-              <input
-                className="px-2 ring-0 focus:ring-0 focus:outline-none mt-1 bg-transparent w-full h-11 border border-alt-black focus:border-alt-black rounded-lg"
-                name="address"
-                id="address"
-                type="text"
+              <TextInput
+                name={"address"}
+                id={"address"}
+                type={"text"}
                 value={loginForm.address}
-                onChange={handleChange}
+                handleChange={handleChange}
+                label="Address"
               />
             </div>
             <button
@@ -248,7 +223,7 @@ export default function SignUp() {
         </div>
       </div>
 
-      <div className="w-3/4 border-l-2">
+      <div className="hidden sm:block w-3/4 border-l-2">
         <img
           className="w-full h-screen object-fill"
           src="/login-bg.jpg"

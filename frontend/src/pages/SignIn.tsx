@@ -9,7 +9,8 @@ import {
   clearError,
 } from "../redux/user/UserSlice";
 import { Alert } from "flowbite-react";
-import { FiEye, FiEyeOff } from "react-icons/fi";
+import TextInput from "../components/Input/TextInput";
+import PasswordInput from "../components/Input/PasswordInput";
 
 interface SignInForm {
   email: string;
@@ -72,8 +73,8 @@ export default function SignIn() {
 
   return (
     <div className="flex w-full justify-between items-start text-alt-black">
-      <div className="w-1/4 h-screen px-7 py-20">
-        <h1 className="font-integral text-3xl sm:text-4xl">Resh.</h1>
+      <div className="w-full sm:w-1/4 h-screen px-7 py-20">
+        <h1 className="font-integral text-4xl">Resh.</h1>
         <div className="flex flex-col gap-3 mt-10">
           <p className="text-3xl font-serif">Hesabınıza giriş yapın</p>
           <p className="text-opacity-90 text-md font-semibold">
@@ -100,50 +101,23 @@ export default function SignIn() {
 
         <div>
           <form onSubmit={handleSubmit}>
-            <div>
-              <label className="text-sm font-bold" htmlFor="email">
-                Email
-              </label>
-              <input
-                className="px-2 ring-0 focus:ring-0 focus:outline-none mt-1 bg-transparent w-full h-11 border border-alt-black focus:border-alt-black rounded-lg"
-                name="email"
-                id="email"
-                type="email"
-                onChange={handleChange}
-              />
-            </div>
+            <TextInput
+              name={"email"}
+              id={"email"}
+              type={"email"}
+              value={loginForm.email}
+              handleChange={handleChange}
+              label="Email"
+            />
             <div className="mt-6">
-              <label className="text-sm font-bold" htmlFor="password">
-                Şifre
-              </label>
-              <div className="flex justify-between ring-0 focus:ring-0 pr-2 mt-1 bg-transparent outline-none w-full h-11 border border-alt-black focus:border-alt-black rounded-lg">
-                {showPassword ? (
-                  <input
-                    className="w-[90%] rounded-lg ring-0 focus:ring-0 focus:outline-none border-none focus:border-alt-black"
-                    name="password"
-                    id="password"
-                    type="text"
-                    ref={passwordRef}
-                    onChange={handleChange}
-                  />
-                ) : (
-                  <input
-                    className="w-[90%] rounded-lg ring-0 focus:ring-0 focus:outline-none border-none focus:border-alt-black"
-                    name="password"
-                    id="password"
-                    type="password"
-                    ref={passwordRef}
-                    onChange={handleChange}
-                  />
-                )}
-                <button
-                  type="button"
-                  onClick={handleShowPassword}
-                  className="focus:outline-none"
-                >
-                  {showPassword ? <FiEyeOff /> : <FiEye />}
-                </button>
-              </div>
+              <PasswordInput
+                name={"password"}
+                id={"password"}
+                handleChange={handleChange}
+                handleClick={handleShowPassword}
+                showPassword={showPassword}
+                label="Şifre"
+              />
             </div>
             <button
               type="submit"
@@ -160,7 +134,7 @@ export default function SignIn() {
         </div>
       </div>
 
-      <div className="w-3/4 border-l-2">
+      <div className="hidden sm:block w-3/4 border-l-2">
         <img
           className="w-full h-screen object-fill"
           src="/login-bg.jpg"

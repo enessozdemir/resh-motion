@@ -6,13 +6,20 @@ import com.project.resh_motion.dto.LoginResponse;
 import com.project.resh_motion.entities.User;
 import com.project.resh_motion.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -35,25 +42,36 @@ public class UserService {
         return users;
     }
 
-    public String signUp(User user) {
+    public User signUp(User user) {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
-        userRepository.save(user);
-        return "User successfully created!";
+        return userRepository.save(user);
     }
 
     public User signIn(LoginUserDto loginUserDto) {
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUserDto.getEmail(),
-                        loginUserDto.getPassword()
-                )
-        );
+        if (loginUserDto.getEmail() == null || loginUserDto.getEmail().isBlank()) {
+            throw new IllegalArgumentException("E-posta boş olamaz!");
+        }
+
+        if (loginUserDto.getPassword() == null || loginUserDto.getPassword().isBlank()) {
+            throw new IllegalArgumentException("Şifre boş olamaz!");
+        }
+
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginUserDto.getEmail(),
+                            loginUserDto.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            throw new IllegalArgumentException("Geçersiz e-posta veya şifre!");
+        }
 
         return userRepository.findByEmail(loginUserDto.getEmail())
-                .orElseThrow();
-
+                .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı!"));
     }
+
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);

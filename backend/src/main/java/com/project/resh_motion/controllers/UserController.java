@@ -12,10 +12,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:5173/", maxAge = 3600)
 public class UserController {
     @Autowired
     private final JwtService jwtService;
@@ -35,15 +38,30 @@ public class UserController {
     }
 
     @PostMapping("/auth/sign-up")
-    private ResponseEntity<String> signUp(@RequestBody User user) {
-        return ResponseEntity.ok(userService.signUp(user));
+    public ResponseEntity<Map<String, Object>> signUp(@RequestBody User user) {
+        User createdUser = userService.signUp(user);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Kullanıcı başarıyla oluşturuldu!");
+        response.put("user", createdUser);
+
+        return ResponseEntity.ok(response);
     }
+
 
     @PostMapping("/auth/sign-in")
     public ResponseEntity<LoginResponse> signIn(@Valid @RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = userService.signIn(loginUserDto);
         String jwtToken = jwtService.generateToken((UserDetails) authenticatedUser);
-        LoginResponse loginResponse = LoginResponse.builder().token(jwtToken).expiresIn(jwtService.getExpirationTime()).build();
+        LoginResponse loginResponse = LoginResponse.builder()
+                .id(authenticatedUser.getId())
+                .name(authenticatedUser.getName())
+                .email(loginUserDto.getEmail())
+                .address(authenticatedUser.getAddress())
+                .phone_number(authenticatedUser.getPhone_number())
+                .createdAt(authenticatedUser.getCreatedAt())
+                .token(jwtToken).expiresIn(jwtService.getExpirationTime()).build();
         return ResponseEntity.ok(loginResponse);
     }
 

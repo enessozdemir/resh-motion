@@ -1,6 +1,9 @@
 package com.project.resh_motion.controllers;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import com.project.resh_motion.dto.LoginUserDto;
 import com.project.resh_motion.dto.LoginResponse;
 import com.project.resh_motion.entities.User;
@@ -8,6 +11,7 @@ import com.project.resh_motion.services.JwtService;
 import com.project.resh_motion.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +22,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = "http://localhost:5173/", maxAge = 3600)
 public class UserController {
     @Autowired
     private final JwtService jwtService;

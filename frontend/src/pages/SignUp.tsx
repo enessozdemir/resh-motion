@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearError } from "../redux/user/UserSlice";
@@ -7,6 +7,13 @@ import { Alert } from "flowbite-react";
 import { CiCircleCheck, CiCircleRemove } from "react-icons/ci";
 import TextInput from "../components/Input/TextInput";
 import PasswordInput from "../components/Input/PasswordInput";
+// import {
+//   GoogleAuthProvider,
+//   getAuth,
+//   signInWithRedirect,
+//   getRedirectResult,
+// } from "firebase/auth";
+// import { app } from "../firebase";
 
 interface SignUpForm {
   email: string;
@@ -31,6 +38,7 @@ export default function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const passwordRef = useRef<HTMLInputElement>(null);
+  // const auth = getAuth(app);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -58,6 +66,59 @@ export default function SignUp() {
     });
   };
 
+  // const handleGoogleSignIn = async () => {
+  //   const googleProvider = new GoogleAuthProvider();
+  //   try {
+  //     // Use signInWithRedirect instead of signInWithPopup
+  //     await signInWithRedirect(auth, googleProvider);
+
+  //     // User will be redirected to Google for sign-in and back to your app
+  //   } catch (err) {
+  //     setError("Google ile giriş sırasında bir hata oluştu.");
+  //     console.error(err);
+  //   }
+  // };
+
+  // const handleRedirectResult = async () => {
+  //   try {
+  //     const result = await getRedirectResult(auth);
+  //     if (result) {
+  //       const idToken = await result.user.getIdToken();
+
+  //       if (!idToken) {
+  //         throw new Error("ID Token alınamadı");
+  //       }
+
+  //       const response = await fetch("http://localhost:8080/users/auth/google", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({ idToken }),
+  //         mode: "cors",
+  //       });
+
+  //       if (!response.ok) {
+  //         const errorData = await response.json();
+  //         return setError(errorData.message || "Bir hata oluştu!");
+  //       }
+
+  //       setShowSuccess(true);
+  //       setTimeout(() => {
+  //         navigate("/home");
+  //         setShowSuccess(false);
+  //       }, 3000);
+  //     }
+  //   } catch (err) {
+  //     setError("Google ile giriş sırasında bir hata oluştu.");
+  //     console.error(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   handleRedirectResult();
+  // }, []);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -66,7 +127,8 @@ export default function SignUp() {
       !loginForm.password ||
       !loginForm.name ||
       !loginForm.phone_number ||
-      !loginForm.address
+      !loginForm.address ||
+      loginForm.password.length < 8
     ) {
       return setError("Lütfen tüm alanları doldurun!");
     }
@@ -126,17 +188,18 @@ export default function SignUp() {
           </p>
         </div>
 
-        <div className="mt-5 text-white tracking-wide">
+        {/* <div className="mt-5 text-white tracking-wide">
           <button
             type="button"
+            onClick={handleGoogleSignIn}
             className="bg-alt-black hover:shadow-lg w-full flex items-center justify-center gap-3 py-2.5 rounded-lg mt-2 transition-all ease-in-out duration-150"
           >
             <FcGoogle className="w-7 h-7" />
             <span className="text-md">Google</span>
           </button>
-        </div>
+        </div> */}
 
-        <div className="w-[92%] ml-3 opacity-40 mt-8 mb-5">
+        <div className="w-[92%] ml-3 opacity-80 mt-8 mb-5">
           <hr />
         </div>
 
@@ -176,11 +239,11 @@ export default function SignUp() {
                   {passwordValid ? (
                     <CiCircleCheck className="text-green-600" />
                   ) : (
-                    <CiCircleRemove className="text-red-600" />
+                    <CiCircleRemove className="text-silver" />
                   )}
                   <p
                     className={`text-xs ${
-                      passwordValid ? "text-green-600" : "text-red-600"
+                      passwordValid ? "text-green-600" : "text-silver"
                     }`}
                   >
                     Şifreniz en az 8 karakter olmalıdır

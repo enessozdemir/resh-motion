@@ -16,10 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -71,7 +68,6 @@ public class UserService {
         return userRepository.findByEmail(loginUserDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı!"));
     }
-
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);

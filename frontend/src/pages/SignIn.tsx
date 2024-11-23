@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { FcGoogle } from "react-icons/fc";
+// import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -85,7 +85,7 @@ export default function SignIn() {
           </p>
         </div>
 
-        <div className="mt-5 text-white tracking-wide">
+        {/* <div className="mt-5 text-white tracking-wide">
           <button
             type="button"
             className="bg-alt-black hover:shadow-lg w-full flex items-center justify-center gap-3 py-2.5 rounded-lg mt-2 transition-all ease-in-out duration-150"
@@ -93,9 +93,9 @@ export default function SignIn() {
             <FcGoogle className="w-7 h-7" />
             <span className="text-md">Google</span>
           </button>
-        </div>
+        </div> */}
 
-        <div className="w-[92%] ml-3 opacity-40 my-10">
+        <div className="w-[92%] ml-3 opacity-80 my-10">
           <hr />
         </div>
 

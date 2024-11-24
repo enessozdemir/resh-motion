@@ -30,9 +30,8 @@ public class SecurityConfiguration  {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new AntPathRequestMatcher("/users/auth/sign-up")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/users/auth/sign-in")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/users/auth/google")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/users/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/cars/**")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

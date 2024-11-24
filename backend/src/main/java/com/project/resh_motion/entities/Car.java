@@ -10,6 +10,7 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String brand;
     private String model;
     private String vehicle_class;
@@ -19,5 +20,6 @@ public class Car {
     private Integer min_age;
     private Integer km_limit;
     private Integer price_per_day;
+    @Column(name = "default_photo_url", unique = true, nullable = false)
     private String defaultPhotoUrl;
 }

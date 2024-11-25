@@ -1,22 +1,57 @@
 import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { MdKeyboardArrowDown } from "react-icons/md";
+import {
+  Button,
+  Dropdown,
+  DropdownDivider,
+  DropdownItem,
+  Modal,
+  ModalBody,
+  ModalHeader,
+} from "flowbite-react";
+import { FiLogOut, FiUser } from "react-icons/fi";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const { currentUser } = useSelector((state: any) => state.user);
+  const [showModal, setShowModal] = useState(false);
+  const firstName = currentUser?.name.split(" ")[0];
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch(
+        `http://localhost:8080/users/auth/sign-out/{currentUser.id}`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      window.location.href = "/home";
+    } catch (error) {
+      console.error("Error logging out", error);
+    }
   };
 
   useEffect(() => {
     setIsOpen(false);
   }, [location.pathname]);
 
+  console.log(currentUser);
+
   return (
-    <div className="fixed w-full h-16 px-5 flex items-center border-b tracking-normal overflow-x-hidden bg-white z-50">
+    <div className="fixed w-full h-16 px-5 flex items-center border-b bg-white z-50">
       <div className="flex justify-between items-center w-full">
-        <Link to="/home" className="w-[15%]">
+        <Link to="/home" className="w-[13%]">
           <h1 className="font-airone text-alt-black text-3xl sm:text-4xl mt-1 sm:mt-0">
             RESH.
           </h1>
@@ -116,11 +151,13 @@ export default function Navbar() {
               </Link>
             </ul>
             <div className="flex justify-center gap-x-5">
-              <Link to="/sign-in">
-                <button className="w-24 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300">
-                  Giriş Yap
-                </button>
-              </Link>
+              {currentUser ? null : (
+                <Link to="/sign-in">
+                  <button className="w-20 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300">
+                    Giriş Yap
+                  </button>
+                </Link>
+              )}
               <Link to="/">
                 <button className="w-32 h-10 rounded-full bg-brand-color text-white font-medium hover:shadow-lg transition-all ease-out duration-300">
                   Araç Kirala
@@ -130,12 +167,34 @@ export default function Navbar() {
           </div>
         </aside>
 
-        <div className="w-[15%] hidden sm:flex gap-3">
-          <Link to="/sign-in">
-            <button className="w-20 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300">
-              Giriş Yap
-            </button>
-          </Link>
+        <div className="w-[17%] hidden sm:flex gap-3 items-center">
+          {currentUser ? (
+            <Dropdown
+              arrowIcon={false}
+              inline
+              label={
+                <div className="flex h-10 px-3 rounded-full bg-gray-100 items-center">
+                  <p className="font-medium">{firstName}</p>
+                  <MdKeyboardArrowDown size={15} />
+                </div>
+              }
+              placement="bottom-end"
+            >
+              <Link to={"/profile"}>
+                <DropdownItem icon={FiUser}>Profile</DropdownItem>
+              </Link>
+              <DropdownDivider />
+              <DropdownItem icon={FiLogOut} onClick={() => setShowModal(true)}>
+                Sign Out
+              </DropdownItem>
+            </Dropdown>
+          ) : (
+            <Link to="/sign-in">
+              <button className="w-20 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300">
+                Giriş Yap
+              </button>
+            </Link>
+          )}
           <Link to="/">
             <button className="w-32 h-10 rounded-full bg-brand-color text-white font-medium hover:shadow-lg transition-all ease-out duration-300">
               Araç Kirala
@@ -143,6 +202,43 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
+      {showModal && (
+        <Modal
+          show={showModal}
+          onClose={() => setShowModal(false)}
+          popup
+          size="md"
+          className="text-gray-500"
+        >
+          <ModalHeader className="p-6">Sign Out</ModalHeader>
+          <ModalBody>
+            <p className="text-sm text-justify">
+              Are you sure you want to sign out?
+            </p>
+
+            <div className="flex justify-end gap-x-2 mt-5">
+              <Button
+                color="light"
+                className="font-extralight text-red-600 border border-red-600"
+                onClick={() => setShowModal(false)}
+                size="sm"
+                pill
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleLogout}
+                color="failure"
+                className="font-extralight"
+                size="sm"
+                pill
+              >
+                Sign Out
+              </Button>
+            </div>
+          </ModalBody>
+        </Modal>
+      )}
     </div>
   );
 }

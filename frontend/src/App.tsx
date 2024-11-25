@@ -5,12 +5,14 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
+// import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
   const location = useLocation();
   const hideHeaderAndFooter = ["/sign-in", "/sign-up"].includes(
     location.pathname
   );
+
   return (
     <div>
       {!hideHeaderAndFooter && <Header />}

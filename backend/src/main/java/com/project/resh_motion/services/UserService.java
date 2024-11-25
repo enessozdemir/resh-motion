@@ -21,6 +21,8 @@ public class UserService {
     @Autowired
     private final AuthenticationManager authenticationManager;
 
+    private final Map<String, Long> tokenBlacklist = new HashMap<>();
+
     private UserService(UserRepository userRepository,AuthenticationManager authenticationManager,PasswordEncoder passwordEncoder) {
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
@@ -65,6 +67,21 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    public String signOut(Long userId, String token) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isEmpty()) {
+            throw new IllegalArgumentException("Kullanıcı bulunamadı!");
+        }
+
+        tokenBlacklist.put(token, System.currentTimeMillis());
+
+        return "Kullanıcı çıkış yaptı!";
+    }
+
+    public boolean isTokenBlacklisted(String token) {
+        return tokenBlacklist.containsKey(token);
     }
 
 

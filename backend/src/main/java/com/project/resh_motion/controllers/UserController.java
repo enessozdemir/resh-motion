@@ -69,4 +69,19 @@ public class UserController {
         userService.deleteUser(userId);
     }
 
+    @PostMapping("/auth/sign-out/{userId}")
+    public ResponseEntity<Map<String, Object>> signOut(@PathVariable Long userId, @RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        String message = userService.signOut(userId, token);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", message);
+
+        return ResponseEntity.ok(response);
+    }
+
+
+
+
 }

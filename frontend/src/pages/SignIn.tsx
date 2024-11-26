@@ -49,19 +49,25 @@ export default function SignIn() {
 
     try {
       dispatch(signInStart());
-      const response = await fetch("http://localhost:8080/users/auth/sign-in", {
+      const response = await fetch("http://localhost:8080/auth/sign-in", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(loginForm),
+        credentials: "include",
       });
 
       const data = await response.json();
+      console.log(data);
 
       if (!response.ok) {
         const errorMessage = data.detail || "Bir hata oluştu!";
         return dispatch(signInFailure(errorMessage));
+      }
+
+      if (data.accessToken) {
+        localStorage.setItem("accessToken", data.accessToken);
       }
 
       dispatch(signInSuccess(data));

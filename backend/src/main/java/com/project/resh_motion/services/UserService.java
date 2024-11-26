@@ -1,7 +1,6 @@
 package com.project.resh_motion.services;
 
 
-import com.project.resh_motion.dto.LoginUserDto;
 import com.project.resh_motion.entities.User;
 import com.project.resh_motion.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +18,9 @@ public class UserService {
     @Autowired
     private final PasswordEncoder passwordEncoder;
     @Autowired
-    private final AuthenticationManager authenticationManager;
 
-    private final Map<String, Long> tokenBlacklist = new HashMap<>();
 
-    private UserService(UserRepository userRepository,AuthenticationManager authenticationManager,PasswordEncoder passwordEncoder) {
-        this.authenticationManager = authenticationManager;
+    private UserService(UserRepository userRepository,PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -35,54 +31,8 @@ public class UserService {
         return users;
     }
 
-    public User signUp(User user) {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
-        return userRepository.save(user);
-    }
-
-    public User signIn(LoginUserDto loginUserDto) {
-        if (loginUserDto.getEmail() == null || loginUserDto.getEmail().isBlank()) {
-            throw new IllegalArgumentException("E-posta boş olamaz!");
-        }
-
-        if (loginUserDto.getPassword() == null || loginUserDto.getPassword().isBlank()) {
-            throw new IllegalArgumentException("Şifre boş olamaz!");
-        }
-
-        try {
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            loginUserDto.getEmail(),
-                            loginUserDto.getPassword()
-                    )
-            );
-        } catch (BadCredentialsException e) {
-            throw new IllegalArgumentException("Geçersiz e-posta veya şifre!");
-        }
-
-        return userRepository.findByEmail(loginUserDto.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("Kullanıcı bulunamadı!"));
-    }
-
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
     }
-
-    public String signOut(Long userId, String token) {
-        Optional<User> user = userRepository.findById(userId);
-        if (user.isEmpty()) {
-            throw new IllegalArgumentException("Kullanıcı bulunamadı!");
-        }
-
-        tokenBlacklist.put(token, System.currentTimeMillis());
-
-        return "Kullanıcı çıkış yaptı!";
-    }
-
-    public boolean isTokenBlacklisted(String token) {
-        return tokenBlacklist.containsKey(token);
-    }
-
 
 }

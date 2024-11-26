@@ -8,14 +8,16 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
-public class LoginResponse {
+public class JwtResponseDTO {
     private Long id;
     private String email;
     private String name;
     private String phone_number;
     private String address;
     private LocalDateTime createdAt;
+    private String accessToken;
     private String token;
-    private long expiresIn;
 }

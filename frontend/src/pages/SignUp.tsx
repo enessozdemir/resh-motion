@@ -135,7 +135,7 @@ export default function SignUp() {
 
     try {
       setError(null);
-      const response = await fetch("http://localhost:8080/users/auth/sign-up", {
+      const response = await fetch("http://localhost:8080/auth/sign-up", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -167,7 +167,7 @@ export default function SignUp() {
       setError("Bir hata oluştu! Lütfen tekrar deneyin.");
     }
   };
-
+  
   return (
     <div className="flex w-full justify-between items-start text-alt-black">
       {showSuccess && (

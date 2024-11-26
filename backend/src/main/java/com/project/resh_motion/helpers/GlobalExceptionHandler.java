@@ -1,4 +1,4 @@
-package com.project.resh_motion.exceptions;
+package com.project.resh_motion.helpers;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import org.springframework.http.HttpStatusCode;

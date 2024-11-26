@@ -10,7 +10,6 @@ export default function HomePage() {
     } else {
       const data = await response.json();
       setCars(data);
-      console.log(data);
     }
   };
 

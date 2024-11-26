@@ -12,41 +12,64 @@ import {
   ModalHeader,
 } from "flowbite-react";
 import { FiLogOut, FiUser } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signInSuccess } from "../redux/user/UserSlice";
+import axios from "axios";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
   const location = useLocation();
   const { currentUser } = useSelector((state: any) => state.user);
   const [showModal, setShowModal] = useState(false);
   const firstName = currentUser?.name.split(" ")[0];
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const handleLogout = async () => {
+  const checkAuthentication = async () => {
     try {
-      await fetch(
-        `http://localhost:8080/users/auth/sign-out/{currentUser.id}`,
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      window.location.href = "/home";
+      const response = await axios.get("http://localhost:8080/auth/authenticate", {
+        withCredentials: true,
+      });
+      if (response.data && response.data.isAuthenticated) {
+        setIsAuthenticated(true);
+        setUserData(response.data.user);
+        dispatch(signInSuccess(response.data.user));
+      } else {
+        setIsAuthenticated(false);
+        setUserData(null);
+      }
     } catch (error) {
-      console.error("Error logging out", error);
+      console.error("Authentication error:", error);
+      setIsAuthenticated(false);
+      setUserData(null);
+    }
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await axios.post("http://localhost:8080/auth/sign-out", {}, { withCredentials: true });
+      setIsAuthenticated(false);
+      setUserData(null);
+      navigate("/sign-in");
+    } catch (error) {
+      console.error("Error during sign out:", error);
     }
   };
 
   useEffect(() => {
-    setIsOpen(false);
+    checkAuthentication();
   }, [location.pathname]);
 
-  console.log(currentUser);
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
 
   return (
     <div className="fixed w-full h-16 px-5 flex items-center border-b bg-white z-50">
@@ -168,7 +191,7 @@ export default function Navbar() {
         </aside>
 
         <div className="w-[17%] hidden sm:flex gap-3 items-center">
-          {currentUser ? (
+          {currentUser?.token ? (
             <Dropdown
               arrowIcon={false}
               inline
@@ -181,11 +204,11 @@ export default function Navbar() {
               placement="bottom-end"
             >
               <Link to={"/profile"}>
-                <DropdownItem icon={FiUser}>Profile</DropdownItem>
+                <DropdownItem icon={FiUser}>Profil</DropdownItem>
               </Link>
               <DropdownDivider />
               <DropdownItem icon={FiLogOut} onClick={() => setShowModal(true)}>
-                Sign Out
+                Çıkış Yap
               </DropdownItem>
             </Dropdown>
           ) : (
@@ -210,10 +233,10 @@ export default function Navbar() {
           size="md"
           className="text-gray-500"
         >
-          <ModalHeader className="p-6">Sign Out</ModalHeader>
+          <ModalHeader className="p-6">Çıkış Yap</ModalHeader>
           <ModalBody>
             <p className="text-sm text-justify">
-              Are you sure you want to sign out?
+              Çıkış yapmak istediğinize emin misiniz?
             </p>
 
             <div className="flex justify-end gap-x-2 mt-5">
@@ -224,16 +247,16 @@ export default function Navbar() {
                 size="sm"
                 pill
               >
-                Cancel
+                İptal
               </Button>
               <Button
-                onClick={handleLogout}
+                onClick={handleSignOut}
                 color="failure"
                 className="font-extralight"
                 size="sm"
                 pill
               >
-                Sign Out
+                Çıkış Yap
               </Button>
             </div>
           </ModalBody>

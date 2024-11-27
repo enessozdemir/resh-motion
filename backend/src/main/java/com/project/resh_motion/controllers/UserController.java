@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
@@ -28,6 +29,12 @@ public class UserController {
 
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/user/{userId}")
+    private Optional<User> getOneUser(@PathVariable Long userId) {
+        return userService.getOneUser(userId);
+    }
+
 
     @DeleteMapping("delete/{userId}")
     private void deleteUser(@PathVariable Long userId) {

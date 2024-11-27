@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 // import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,29 +53,31 @@ export default function SignIn() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Set-Cookie": "SameSite=Strict",
         },
         body: JSON.stringify(loginForm),
         credentials: "include",
       });
 
       const data = await response.json();
-      console.log(data);
 
       if (!response.ok) {
         const errorMessage = data.detail || "Bir hata oluştu!";
         return dispatch(signInFailure(errorMessage));
       }
 
-      if (data.accessToken) {
-        localStorage.setItem("accessToken", data.accessToken);
+      if (response.ok) {
+        dispatch(signInSuccess(data));
+        navigate("/home");
       }
-
-      dispatch(signInSuccess(data));
-      navigate("/home");
     } catch (err) {
       dispatch(signInFailure("Bir hata oluştu! Lütfen tekrar deneyin."));
     }
   };
+
+  useEffect(() => {
+    signInStart();
+  }, [error]);
 
   return (
     <div className="flex w-full justify-between items-start text-alt-black">

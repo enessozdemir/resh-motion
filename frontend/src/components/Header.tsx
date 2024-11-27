@@ -13,50 +13,49 @@ import {
 } from "flowbite-react";
 import { FiLogOut, FiUser } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { signInSuccess } from "../redux/user/UserSlice";
 import axios from "axios";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [userData, setUserData] = useState<any>(null);
   const location = useLocation();
   const { currentUser } = useSelector((state: any) => state.user);
   const [showModal, setShowModal] = useState(false);
   const firstName = currentUser?.name.split(" ")[0];
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const checkAuthentication = async () => {
-    try {
-      const response = await axios.get("http://localhost:8080/auth/authenticate", {
-        withCredentials: true,
-      });
-      if (response.data && response.data.isAuthenticated) {
-        setIsAuthenticated(true);
-        setUserData(response.data.user);
-        dispatch(signInSuccess(response.data.user));
-      } else {
-        setIsAuthenticated(false);
-        setUserData(null);
+  const getCookie = (name: string): string | null => {
+    const cookies = document.cookie.split("; ");
+    for (const cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === name) {
+        return decodeURIComponent(value);
       }
-    } catch (error) {
-      console.error("Authentication error:", error);
+    }
+    return null;
+  };
+
+  const isTokenActive = () => {
+    const accessToken = getCookie("access_token");
+    if (accessToken) {
+      setIsAuthenticated(true);
+    } else {
       setIsAuthenticated(false);
-      setUserData(null);
     }
   };
 
   const handleSignOut = async () => {
     try {
-      await axios.post("http://localhost:8080/auth/sign-out", {}, { withCredentials: true });
+      await axios.post(
+        "http://localhost:8080/auth/sign-out",
+        {},
+        { withCredentials: true }
+      );
       setIsAuthenticated(false);
-      setUserData(null);
       navigate("/sign-in");
     } catch (error) {
       console.error("Error during sign out:", error);
@@ -64,12 +63,12 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    checkAuthentication();
+    setIsOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
-    setIsOpen(false);
-  }, [location.pathname]);
+    isTokenActive();
+  }, []);
 
   return (
     <div className="fixed w-full h-16 px-5 flex items-center border-b bg-white z-50">
@@ -191,7 +190,7 @@ export default function Navbar() {
         </aside>
 
         <div className="w-[17%] hidden sm:flex gap-3 items-center">
-          {currentUser?.token ? (
+          {isAuthenticated ? (
             <Dropdown
               arrowIcon={false}
               inline

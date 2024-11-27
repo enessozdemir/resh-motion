@@ -38,21 +38,13 @@ public class AuthController {
 
     @PostMapping("/sign-in")
     public ResponseEntity<LoginResponse> signIn(@RequestBody LoginRequest request, HttpServletResponse response) throws Exception {
-        LoginResponse loginResponse = authService.signIn(request.getEmail(), request.getPassword());
-        ResponseCookie cookie = ResponseCookie.from("access_token", loginResponse.getToken())
-                .httpOnly(true)
-                .path("/")
-                .maxAge(loginResponse.getExpiresIn())
-                .build();
-
-        response.addHeader("Set-Cookie", cookie.toString());
-        return ResponseEntity.ok(loginResponse);
+       return authService.signIn(request, response);
     }
 
     @GetMapping("/authenticate")
-    public ResponseEntity<?> authenticateUser(@CookieValue(name = "accessToken", required = false) String accessToken) {
-        if (accessToken != null && jwtUtil.validateToken(accessToken)) {
-            User user = jwtUtil.getUserFromToken(accessToken);
+    public ResponseEntity<?> authenticateUser(@CookieValue(name = "access_token", required = false) String access_token) {
+        if (access_token != null && jwtUtil.validateToken(access_token)) {
+            User user = jwtUtil.getUserFromToken(access_token);
             return ResponseEntity.ok(Map.of(
                     "isAuthenticated", true,
                     "user", Map.of(
@@ -64,9 +56,10 @@ public class AuthController {
         return ResponseEntity.ok(Map.of("isAuthenticated", false));
     }
 
+
     @PostMapping("/sign-out")
     public ResponseEntity<?> signOut(HttpServletResponse response) {
-        Cookie cookie = new Cookie("accessToken", null);
+        Cookie cookie = new Cookie("access_token", null);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setMaxAge(0);

@@ -15,7 +15,7 @@ import java.util.function.Function;
 public class JwtUtil {
 
     @Value("${security.jwt.secret-key}")
-    private static String secretKey;
+    private String secretKey;
 
     @Value("${security.jwt.expiration-time}")
     private int jwtExpiration;
@@ -28,23 +28,18 @@ public class JwtUtil {
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
     }
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
     private Claims extractAllClaims(String token) {
-        return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignInKey())
+        return Jwts.parserBuilder()
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-    }
-
-    private Key getSignInKey() {
-        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
-        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     public String generateToken(String email) {
@@ -73,47 +68,50 @@ public class JwtUtil {
         return extractClaim(token, Claims::getExpiration);
     }
 
-
     public boolean isTokenValid(String token, User user) {
         final String email = extractEmail(token);
         return (email.equals(user.getEmail())) && !isTokenExpired(token);
     }
 
-    public static boolean validateToken(String token) {
+    public boolean validateToken(String token) {
         try {
-            // Parse the token and check the signature and expiration
             Jwts.parserBuilder()
-                    .setSigningKey(secretKey)
+                    .setSigningKey(getSigningKey())
                     .build()
-                    .parseClaimsJws(token); // If token is invalid, it will throw an exception
-
+                    .parseClaimsJws(token);
             return true;
-        } catch (SignatureException | io.jsonwebtoken.ExpiredJwtException e) {
-            // Invalid or expired token
+        } catch (JwtException e) {
+            // Log the exception here to provide more information on the error
+            System.out.println("Token validation failed: " + e.getMessage());
             return false;
         }
     }
 
-    public static User getUserFromToken(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(secretKey)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+    public User getUserFromToken(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
 
-        // Assuming the token contains user information in the claims (e.g. "name", "email")
-        String name = claims.get("name", String.class); // Replace "name" with the key used in your token
-        String email = claims.get("email", String.class); // Replace "email" with the key used in your token
+            String name = claims.get("name", String.class);
+            String email = claims.get("email", String.class);
 
-        // You can add more fields if needed
-
-        return new User();
+            User user = new User();
+            user.setName(name);
+            user.setEmail(email);
+            return user;
+        } catch (JwtException e) {
+            // Log the exception to understand what went wrong
+            System.out.println("Error extracting user from token: " + e.getMessage());
+            return null;
+        }
     }
 
-
-    public static boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) {
         Claims claims = Jwts.parserBuilder()
-                .setSigningKey(secretKey)
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
@@ -121,6 +119,4 @@ public class JwtUtil {
         Date expirationDate = claims.getExpiration();
         return expirationDate.before(new Date());
     }
-
-
 }

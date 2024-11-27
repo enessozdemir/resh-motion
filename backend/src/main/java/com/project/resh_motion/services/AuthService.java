@@ -1,10 +1,14 @@
 package com.project.resh_motion.services;
 
+import com.project.resh_motion.dto.LoginRequest;
 import com.project.resh_motion.dto.LoginResponse;
 import com.project.resh_motion.entities.User;
 import com.project.resh_motion.repositories.UserRepository;
 import com.project.resh_motion.util.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -26,16 +30,17 @@ public class AuthService {
         return userRepository.save(user);
     }
 
-    public LoginResponse signIn(String email, String password) throws Exception {
-        Optional<User> userOptional = userRepository.findByEmail(email);
-        if (userOptional.isEmpty() || !passwordEncoder.matches(password, userOptional.get().getPassword())) {
-            throw new Exception("Invalid email or password");
+
+    public ResponseEntity<LoginResponse> signIn(LoginRequest request, HttpServletResponse response) throws Exception {
+        Optional<User> userOptional = userRepository.findByEmail(request.getEmail());
+        if (userOptional.isEmpty() || !passwordEncoder.matches(request.getPassword(), userOptional.get().getPassword())) {
+            throw new Exception("Geçersiz email veya şifre!");
         }
 
         User user = userOptional.get();
-        String token = jwtUtil.generateToken(email);
+        String token = jwtUtil.generateToken(request.getEmail());
 
-        return LoginResponse.builder()
+        LoginResponse loginResponse = LoginResponse.builder()
                 .id(user.getId())
                 .email(user.getEmail())
                 .name(user.getName())
@@ -45,6 +50,14 @@ public class AuthService {
                 .token(token)
                 .expiresIn(jwtUtil.getExpirationTime())
                 .build();
-    }
 
+        ResponseCookie cookie = ResponseCookie.from("access_token", loginResponse.getToken())
+                .httpOnly(false)
+                .path("/")
+                .maxAge(loginResponse.getExpiresIn())
+                .build();
+
+        response.addHeader("Set-Cookie", cookie.toString());
+        return ResponseEntity.ok(loginResponse);
+    }
 }

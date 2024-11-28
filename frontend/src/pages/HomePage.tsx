@@ -1,8 +1,5 @@
-import Lottie from "lottie-react";
 import { useEffect, useState } from "react";
-import linesAnimation from "../assets/lottie/lines.json";
 import CarTypes from "../components/CarTypes";
-import GsapPath from "../components/GsapPath";
 
 export default function HomePage() {
   const [cars, setCars] = useState([]);
@@ -70,10 +67,6 @@ export default function HomePage() {
 
       <div>
         <CarTypes />
-      </div>
-
-      <div>
-        <GsapPath />
       </div>
     </div>
   );

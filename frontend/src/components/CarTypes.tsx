@@ -1,6 +1,54 @@
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+
+gsap.registerPlugin(MotionPathPlugin);
+
 export default function CarTypes() {
+  useEffect(() => {
+    gsap.to("#movingObject", {
+      duration: 20,
+      repeat: -1,
+      ease: "power1.inOut",
+      motionPath: {
+        path: "#carPath",
+        align: "#carPath",
+        alignOrigin: [0.5, 0.62],
+        autoRotate: true,
+      },
+    });
+  }, []);
   return (
     <div className="relative bg-dots flex flex-col gap-40 w-full px-20 py-40 text-alt-black">
+      <svg
+        className="absolute top-0 left-0 w-full h-full pointer-events-none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          id="carPath"
+          d="M1390 10 
+            L1390 610 
+            Q1390 640 1340 640
+            L100 640 
+            Q75 640 75 680
+            L75 1150 
+            Q75 1190 100 1190
+            L1340 1190 
+            Q1390 1190 1390 1240
+            L1390 1800"
+          fill="none"
+          stroke-width="7"
+          strokeDasharray={20}
+        />
+      </svg>
+
+      <div id="movingObject" className="absolute w-24 h-24">
+        <img
+          className="-rotate-90 pointer-events-none"
+          src="/car_images/move.png"
+          alt=""
+        />
+      </div>
       <div className="flex justify-start">
         <div className=" w-1/2 h-[395px] border-4 border-black rounded-tl-lg rounded-bl-lg">
           <img

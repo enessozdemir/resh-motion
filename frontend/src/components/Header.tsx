@@ -56,9 +56,10 @@ export default function Navbar() {
         { withCredentials: true }
       );
       setIsAuthenticated(false);
-      navigate("/sign-in");
+      navigate("/");
+      setShowModal(false);
     } catch (error) {
-      console.error("Error during sign out:", error);
+      console.error("Çıkış yapılırken hata:", error);
     }
   };
 
@@ -71,52 +72,87 @@ export default function Navbar() {
   }, []);
 
   return (
-    <div className="fixed w-full h-16 px-5 flex items-center border-b bg-white z-50">
+    <div className="fixed w-full h-16 px-5 flex items-center border-b bg-white z-50 text-alt-black font-gabarito">
       <div className="flex justify-between items-center w-full">
-        <Link to="/home" className="w-[13%]">
-          <h1 className="font-airone text-alt-black text-3xl sm:text-4xl mt-1 sm:mt-0">
+        <Link to="/home" className="w-[15%]">
+          <h1 className="font-airone text-3xl sm:text-4xl mt-1 sm:mt-0">
             RESH.
           </h1>
         </Link>
 
         {/* Hamburger Menü */}
-        <div className="sm:hidden block relative" onClick={toggleMenu}>
-          <div className="flex flex-col gap-2 items-center justify-center w-8 h-8 cursor-pointer">
-            <span
-              className={`block w-5 h-0.5 rounded-full bg-icon-color transform transition-transform duration-300 ease-in-out ${
-                isOpen && "rotate-45 translate-y-1"
-              }`}
-            ></span>
-            <span
-              className={`block w-5 h-0.5 rounded-full bg-icon-color transform transition-transform duration-300 ease-in-out ${
-                isOpen && "-rotate-45 -translate-y-1.5"
-              }`}
-            ></span>
+        <div className="flex gap-3 items-center">
+          <div className="block sm:hidden">
+            {isAuthenticated ? (
+              <Dropdown
+                arrowIcon={false}
+                inline
+                label={
+                  <div className="flex h-9 px-3 rounded-full border border-silver items-center">
+                    <p className="font-medium">{firstName}</p>
+                    <MdKeyboardArrowDown size={15} />
+                  </div>
+                }
+                placement="bottom-end"
+              >
+                <Link to={"/profile"}>
+                  <DropdownItem icon={FiUser}>Profil</DropdownItem>
+                </Link>
+                <DropdownDivider />
+                <DropdownItem
+                  icon={FiLogOut}
+                  onClick={() => setShowModal(true)}
+                >
+                  Çıkış Yap
+                </DropdownItem>
+              </Dropdown>
+            ) : (
+              <Link to="/sign-in">
+                <button className="w-20 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300">
+                  Giriş Yap
+                </button>
+              </Link>
+            )}
+          </div>
+
+          <div className="sm:hidden block relative" onClick={toggleMenu}>
+            <div className="flex flex-col gap-2 items-center justify-center w-8 h-8 cursor-pointer">
+              <span
+                className={`block w-5 h-0.5 rounded-full bg-silver transform transition-transform duration-300 ease-in-out ${
+                  isOpen && "rotate-45 translate-y-1"
+                }`}
+              ></span>
+              <span
+                className={`block w-5 h-0.5 rounded-full bg-silver transform transition-transform duration-300 ease-in-out ${
+                  isOpen && "-rotate-45 -translate-y-1.5"
+                }`}
+              ></span>
+            </div>
           </div>
         </div>
 
         {/* Desktop Menü */}
         <div className="w-[60%] hidden sm:flex justify-center items-center gap-5">
           <a
-            className="text-center pt-2 w-20 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
+            className="text-center pt-2 w-20 h-10 hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
             href=""
           >
             Araçlar
           </a>
           <a
-            className="text-center pt-2 w-24 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
+            className="text-center pt-2 w-24 h-10 hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
             href=""
           >
             Bayiler
           </a>
           <Link
-            className="text-center pt-2 w-24 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
+            className="text-center pt-2 w-24 h-10 hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
             to="/about"
           >
             Hakkımızda
           </Link>
           <Link
-            className="text-center pt-2 w-24 h-10 text-soft-black hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
+            className="text-center pt-2 w-24 h-10 hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
             to="/contact"
           >
             İletişim
@@ -189,13 +225,13 @@ export default function Navbar() {
           </div>
         </aside>
 
-        <div className="w-[17%] hidden sm:flex gap-3 items-center">
+        <div className="w-[15%] hidden sm:flex gap-3 items-center">
           {isAuthenticated ? (
             <Dropdown
               arrowIcon={false}
               inline
               label={
-                <div className="flex h-10 px-3 rounded-full bg-gray-100 items-center">
+                <div className="flex h-10 px-3 rounded-full border border-silver items-center">
                   <p className="font-medium">{firstName}</p>
                   <MdKeyboardArrowDown size={15} />
                 </div>

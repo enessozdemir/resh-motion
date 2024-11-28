@@ -13,6 +13,7 @@ import {
   PiGithubLogo,
   PiInstagramLogo,
   PiDiscordLogo,
+  PiFacebookLogo,
 } from "react-icons/pi";
 
 export default function FooterCom() {
@@ -108,7 +109,7 @@ export default function FooterCom() {
         </div>
       </div>
 
-      <FooterDivider className="container mx-auto" />
+      <FooterDivider className=" container mx-auto" />
 
       <div className="flex justify-between container mx-auto text-icon-color">
         <FooterCopyright
@@ -116,8 +117,14 @@ export default function FooterCom() {
           by="Resh Motion"
           year={new Date().getFullYear()}
         />
-
         <div className="flex gap-x-5">
+          <a
+            href="https://facebook.com/"
+            target="_blank"
+            className="hover:text-alt-black transition-all duration-200 text-2xl"
+          >
+            <PiFacebookLogo />
+          </a>
           <a
             href="https://www.instagram.com/enessozdemir/"
             target="_blank"
@@ -131,27 +138,6 @@ export default function FooterCom() {
             className="hover:text-alt-black transition-all duration-200 text-2xl"
           >
             <PiXLogo />
-          </a>
-          <a
-            href="https://github.com/enessozdemir"
-            target="_blank"
-            className="hover:text-alt-black transition-all duration-200 text-2xl"
-          >
-            <PiGithubLogo />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/enessozdemir/"
-            target="_blank"
-            className="hover:text-alt-black transition-all duration-200 text-2xl"
-          >
-            <PiLinkedinLogo />
-          </a>
-          <a
-            href="https://discord.com/"
-            target="_blank"
-            className="hover:text-alt-black transition-all duration-200 text-2xl"
-          >
-            <PiDiscordLogo />
           </a>
         </div>
       </div>

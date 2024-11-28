@@ -82,7 +82,7 @@ export default function SignIn() {
   return (
     <div className="flex w-full justify-between items-start text-alt-black">
       <div className="w-full sm:w-1/4 h-screen px-7 py-20">
-        <h1 className="font-integral text-4xl">Resh.</h1>
+        <h1 className="font-airone text-4xl">Resh.</h1>
         <div className="flex flex-col gap-3 mt-10">
           <p className="text-3xl font-serif">Hesabınıza giriş yapın</p>
           <p className="text-opacity-90 text-md font-semibold">

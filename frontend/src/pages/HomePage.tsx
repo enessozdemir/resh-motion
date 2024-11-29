@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import CarTypes from "../components/CarTypes";
+import Dealerships from "../components/Dealerships";
 
 export default function HomePage() {
   const [cars, setCars] = useState([]);
@@ -42,7 +43,9 @@ export default function HomePage() {
       </div> */}
       <div className="flex flex-col container mx-auto gap-7 font-poppins leading-none mt-24">
         <div className="flex flex-col gap-1 text-[76px] justify-center items-center font-bold">
-          <h1 className="text-silver">Türkiye'nin #1</h1>
+          <h1 className="text-silver">
+            Türkiye'nin <span className="underline">#1</span>
+          </h1>
           <h1 className="">Araç Kiralama Platformu</h1>
         </div>
         <p className="font-gabarito text-2xl text-[rgb(129,129,129)] text-center">
@@ -64,6 +67,9 @@ export default function HomePage() {
           style={{ width: "100%" }}
         />
       </div> */}
+      <div>
+        <Dealerships />
+      </div>
 
       <div>
         <CarTypes />

@@ -1,10 +1,13 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { useNavigate } from "react-router-dom";
 
 gsap.registerPlugin(MotionPathPlugin);
 
 export default function CarTypes() {
+  const navigate = useNavigate();
+
   useEffect(() => {
     gsap.to("#movingObject", {
       duration: 20,
@@ -42,9 +45,9 @@ export default function CarTypes() {
         />
       </svg>
 
-      <div id="movingObject" className="absolute w-24 h-24">
+      <div onClick={() => navigate("/cars")} id="movingObject" className="absolute w-24 h-24">
         <img
-          className="-rotate-90 pointer-events-none"
+          className="-rotate-90 cursor-pointer"
           src="/car_images/move.png"
           alt=""
         />

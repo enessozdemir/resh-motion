@@ -9,9 +9,11 @@ import lombok.Data;
 public class Dealership {
     @Id
     private Long id;
+    private String name;
     private String city;
-    private String district;
-    private String location;
+    private String address;
     private String phone_number;
     private String email;
+    private Double longitude;
+    private Double latitude;
 }

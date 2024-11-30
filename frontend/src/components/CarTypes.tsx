@@ -29,7 +29,7 @@ export default function CarTypes() {
       >
         <path
           id="carPath"
-          d="M1390 10 
+          d="M1390 100 
             L1390 610 
             Q1390 640 1340 640
             L100 640 

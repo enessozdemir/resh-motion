@@ -30,6 +30,7 @@ public class SecurityConfiguration  {
                         .requestMatchers(new AntPathRequestMatcher("/users/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/cars/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/auth/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/dealerships/**")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

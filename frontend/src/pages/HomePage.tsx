@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import CarTypes from "../components/CarTypes";
 import Dealerships from "../components/Dealerships";
+import CarTypes2 from "../components/CarTypes2";
+import ScrollDenemesi from "../components/ScrollDenemesi";
 
 export default function HomePage() {
   const [cars, setCars] = useState([]);
@@ -72,7 +74,7 @@ export default function HomePage() {
       </div>
 
       <div>
-        <CarTypes />
+        <CarTypes2 />
       </div>
     </div>
   );

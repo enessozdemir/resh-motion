@@ -5,13 +5,16 @@
     font-family: Gabarito, sans-serif;
 }
 
+.mapboxgl-canvas{
+    cursor: default;
+}
+
 @font-face {
     font-family: 'Airone';
     src: url('./assets/fonts/AironeFont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
-
 
 @tailwind base;
 @tailwind components;

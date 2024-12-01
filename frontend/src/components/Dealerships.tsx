@@ -61,7 +61,7 @@ const Dealerships: React.FC = () => {
         key: API_KEY,
         container: mapElement.current,
         center: [35.17822, 39.55488],
-        zoom: 4.9,
+        zoom: 5,
         style:
           "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAZVM4OHRMeEtZdElMZllDajtlZWJmOWZjMy1hYTRiLTQ3YTAtOTkxZC0xMzU3ZjBmNmUyNzA=/drafts/0.json",
       });
@@ -69,6 +69,8 @@ const Dealerships: React.FC = () => {
       mapInstance.scrollZoom.disable();
       mapInstance.dragRotate.disable();
       mapInstance.touchZoomRotate.disable();
+      mapInstance.dragPan.disable();
+      mapInstance.doubleClickZoom.disable();
 
       setMap(mapInstance);
 
@@ -121,10 +123,10 @@ const Dealerships: React.FC = () => {
   }, [map, dealerships]);
 
   return (
-    <div className="w-11/12 text-alt-black mt-60 rounded-tr-2xl rounded-br-2xl border-t-4 border-b-4 border-r-4 border-alt-black ">
+    <div className="w-11/12 text-alt-black mt-60 rounded-tr-2xl rounded-br-2xl border-t-4 border-b-4 border-r-4 border-alt-black">
       <div className="flex">
         <motion.div
-          className="w-full sm:w-4/6 h-[600px] sm:h-[650px] rounded-tr-2xl rounded-br-2xl bg-white"
+          className="w-full sm:w-4/6 h-[600px] sm:h-[650px] border-r-2 border-alt-black bg-white"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -159,8 +161,8 @@ const Dealerships: React.FC = () => {
             </div>
             <div>
               <p className="text-2xl text-silver font-semibold">
-                <span className="text-alt-black">Bayilerimiz,</span> şehir
-                merkezlerine yakın konumlarıyla size en hızlı ve kolay erişimi
+                <span className="text-alt-black">Şubelerimiz,</span> şehir
+                merkezlerine yakın konumlarıyla size en hızlı ve kolay hizmeti
                 sunuyor.
               </p>
             </div>

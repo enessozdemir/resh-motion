@@ -28,7 +28,7 @@ export default {
           repeating-linear-gradient(45deg, rgb(255, 255, 255) 0px, rgb(255, 255, 255) 10px, transparent 10px, transparent 11px),
           repeating-linear-gradient(135deg, rgb(255, 255, 255) 0px, rgb(255, 255, 255) 10px, transparent 10px, transparent 11px),
           linear-gradient(90deg, hsl(256, 7%, 84%), hsl(256, 7%, 84%))
-        `,
+        `
       },
     },
   },

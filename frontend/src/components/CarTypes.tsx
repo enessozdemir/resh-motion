@@ -1,113 +1,114 @@
-import { useEffect } from "react";
 import { gsap } from "gsap";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-import { useNavigate } from "react-router-dom";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect } from "react";
 
-gsap.registerPlugin(MotionPathPlugin);
+gsap.registerPlugin(ScrollTrigger);
 
 export default function CarTypes() {
-  const navigate = useNavigate();
-
   useEffect(() => {
-    gsap.to("#movingObject", {
-      duration: 20,
-      repeat: -1,
-      ease: "power1.inOut",
-      motionPath: {
-        path: "#carPath",
-        align: "#carPath",
-        alignOrigin: [0.5, 0.62],
-        autoRotate: true,
+    const imageElement = document.querySelector(".car") as HTMLImageElement;
+
+    ScrollTrigger.create({
+      trigger: ".scroll-container",
+      start: "32% top",
+      end: "+=900",
+      pin: true,
+      scrub: true,
+    });
+
+    gsap.to(".eco", {
+      y: -550,
+      scrollTrigger: {
+        trigger: ".main",
+        start: "90px top",
+        end: "700px",
+        scrub: true,
+      },
+    });
+
+    gsap.to(".mid", {
+      y: -1100,
+      scrollTrigger: {
+        trigger: ".main",
+        start: "300px top",
+        end: "900px",
+        scrub: true,
+        onEnter: () => {
+          imageElement.src = "/car_images/megane.jpg";
+        },
+        onLeaveBack: () => {
+          imageElement.src = "/car_images/clio.jpg";
+        },
+      },
+    });
+
+    gsap.to(".lux", {
+      y: -500,
+      scrollTrigger: {
+        trigger: ".main",
+        start: "600px top",
+        end: "1000px",
+        scrub: true,
+        onEnter: () => {
+          imageElement.src = "/car_images/audi.jpeg";
+        },
+        onLeaveBack: () => {
+          imageElement.src = "/car_images/megane.jpg";
+        },
       },
     });
   }, []);
+
   return (
-    <div className="relative bg-dots flex flex-col gap-40 w-full px-20 py-40 text-alt-black">
-      <svg
-        className="absolute top-0 left-0 w-full h-full pointer-events-none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          id="carPath"
-          d="M1390 100 
-            L1390 610 
-            Q1390 640 1340 640
-            L100 640 
-            Q75 640 75 680
-            L75 1150 
-            Q75 1190 100 1190
-            L1340 1190 
-            Q1390 1190 1390 1240
-            L1390 1800"
-          fill="none"
-          stroke-width="7"
-          strokeDasharray={20}
-        />
-      </svg>
+    <div className="scroll-container text-alt-black mt-40 pl-28">
+      <h2 className="text-5xl font-bold">Araç sınıflarımız ile</h2>
+      <h2 className="text-silver text-5xl font-bold">
+        her bütçeye uygun çözümler.
+      </h2>
+      <p className="text-silver font-medium text-3xl w-[67%] mt-10 leading-normal">
+        Her ihtiyaca ve bütçeye uygun seçenekler sunarak{" "}
+        <span className="text-alt-black">konforlu</span>
+        <span className="text-alt-black"> ve pratik</span> bir sürüş deneyimini
+        kolayca yaşamanızı sağlıyoruz. Seyahatlerinizi daha keyifli hale
+        getirmek için buradayız.
+      </p>
 
-      <div onClick={() => navigate("/cars")} id="movingObject" className="absolute w-24 h-24">
-        <img
-          className="-rotate-90 cursor-pointer"
-          src="/car_images/move.png"
-          alt=""
-        />
-      </div>
-      <div className="flex justify-start">
-        <div className=" w-1/2 h-[395px] border-4 border-black rounded-tl-lg rounded-bl-lg">
-          <img
-            className="object-cover"
-            src="/car_images/clio.jpg"
-            alt="Ekonomi"
-          />
-        </div>
-        <div className="w-10 hover:w-1/3 flex flex-col justify-center items-center bg-brand-color rounded-tr-lg rounded-br-lg transition-all ease-in-out duration-500 group">
-          <h3 className="font-semibold text-white text-3xl rotate-90 group-hover:rotate-0 transition-all ease-in-out duration-500">
-            Ekonomi
-          </h3>
-          <p className="hidden group-hover:block text-white text-opacity-80 text-md mt-4 px-4">
-            Ekonomi sınıfı araçlar, bütçe dostu seyahatler için ideal bir
-            seçimdir. Yakıt tasarruflu ve kompakt tasarımlarıyla konforlu bir
-            deneyim sunar.
-          </p>
-        </div>
-      </div>
+      <div className="flex justify-end mt-20">
+        <div className="relative w-[94%] h-[975px] rounded-tl-2xl rounded-bl-2xl border-t-4 border-b-4 border-l-4 border-alt-black">
+          <div className="absolute top-44 -left-24 w-[610px] h-[610px] rounded-2xl border-4 border-alt-black">
+            <div className="absolute w-[610px] h-[610px] border-r-8 border-b-8 border-alt-black rounded-2xl"></div>
+            <img
+              className="w-full h-full rounded-2xl car"
+              src="/car_images/clio.jpg"
+              alt=""
+            />
+          </div>
 
-      <div className="flex justify-end">
-        <div className="w-10 hover:w-1/3 flex flex-col justify-center items-center bg-brand-color rounded-tl-lg rounded-bl-lg transition-all ease-in-out duration-500 group">
-          <h3 className="font-semibold text-white text-3xl rotate-90 group-hover:rotate-0 transition-all ease-in-out duration-500">
-            Orta
-          </h3>
-          <p className="hidden group-hover:block text-white text-opacity-80 text-md mt-4 px-4">
-            Orta segment araçlar, geniş iç hacimleri ve dengeli
-            performanslarıyla hem konforlu hem de ekonomik bir sürüş sağlar.
-          </p>
-        </div>
-        <div className="w-1/2 h-[395px] border-4 border-black rounded-tr-lg rounded-br-lg">
-          <img
-            className="w-full h-full object-cover"
-            src="https://3dcache.makolab.net/PRODUCTION/SA/new-megane-sedan/new-megane-sedan_GRADIENT_EXT_TERPR_CUIR02_4F9DEE8EC60DEB3A8F14F5294B4D92B5_04.jpg"
-            alt="Orta Segment"
-          />
-        </div>
-      </div>
-
-      <div className="flex justify-start">
-        <div className=" w-1/2 h-[395px] border-4 border-black rounded-tl-lg rounded-bl-lg">
-          <img
-            className="object-cover"
-            src="/car_images/audi.jpeg"
-            alt="Ekonomi"
-          />
-        </div>
-        <div className="w-10 hover:w-1/3 flex flex-col justify-center items-center bg-brand-color rounded-tr-lg rounded-br-lg transition-all ease-in-out duration-500 group">
-          <h3 className="font-semibold text-white text-3xl rotate-90 group-hover:rotate-0 transition-all ease-in-out duration-500">
-            Lüks
-          </h3>
-          <p className="hidden group-hover:block text-white text-opacity-80 text-md mt-4 px-4">
-            Lüks sınıf araçlar, prestij ve konforu bir arada sunar. Şık
-            tasarımları ve üst düzey donanımlarıyla ayrıcalıklı bir sürüş
-            deneyimi yaşayın.
-          </p>
+          <div className="main">
+            <div className="eco absolute top-[384px] right-52 w-[450px]">
+              <h3 className="font-bold text-alt-black text-4xl">Ekonomi</h3>
+              <p className="text-silver text-2xl mt-4">
+                Ekonomi sınıfı araçlar, bütçe dostu seyahatler için ideal bir
+                seçimdir. Yakıt tasarruflu ve kompakt tasarımlarıyla konforlu
+                bir deneyim sunar.
+              </p>
+            </div>
+            <div className="mid absolute top-[700px] pt-40 right-52 w-[450px]">
+              <h3 className="font-bold text-alt-black text-4xl">Orta Sınıf</h3>
+              <p className="text-silver text-2xl mt-4">
+                Orta sınıf araçlar, konfor ve genişlik arayanlar için mükemmel
+                bir tercih. Daha uzun seyahatlerde ekstra rahatlık sunar.
+              </p>
+            </div>
+            <div className="lux absolute top-[800px] pt-16 right-52 w-[450px]">
+              <h3 className="font-bold text-alt-black text-4xl">Lüks</h3>
+              <p className="text-silver text-2xl mt-4">
+                Lüks sınıf araçlar, prestij ve konforu bir arada sunar. Şık
+                tasarımları ve üst düzey donanımlarıyla ayrıcalıklı bir sürüş
+                deneyimi yaşayın.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -60,7 +60,7 @@ export default function CarTypes() {
   }, []);
 
   return (
-    <div className="scroll-container text-alt-black mt-40 pl-28">
+    <div className="scroll-container text-alt-black mt-32 pl-28">
       <h2 className="text-5xl font-bold">Araç sınıflarımız ile</h2>
       <h2 className="text-silver text-5xl font-bold">
         her bütçeye uygun çözümler.
@@ -74,7 +74,7 @@ export default function CarTypes() {
       </p>
 
       <div className="flex justify-end mt-20">
-        <div className="relative w-[94%] h-[975px] rounded-tl-2xl rounded-bl-2xl border-t-4 border-b-4 border-l-4 border-alt-black">
+        <div className="relative w-[94.5%] h-[975px] rounded-tl-2xl rounded-bl-2xl border-t-4 border-b-4 border-l-4 border-alt-black">
           <div className="absolute top-44 -left-24 w-[610px] h-[610px] rounded-2xl border-4 border-alt-black">
             <div className="absolute w-[610px] h-[610px] border-r-8 border-b-8 border-alt-black rounded-2xl"></div>
             <img

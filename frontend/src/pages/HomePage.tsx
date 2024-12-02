@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import CarTypes from "../components/CarTypes";
 import Dealerships from "../components/Dealerships";
-
+import FeaturesSection from "../components/FeaturesSection";
 
 export default function HomePage() {
   const [cars, setCars] = useState([]);
@@ -70,6 +70,10 @@ export default function HomePage() {
       </div> */}
       <div>
         <Dealerships />
+      </div>
+
+      <div>
+        <FeaturesSection />
       </div>
 
       <div>

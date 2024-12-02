@@ -123,7 +123,7 @@ const Dealerships: React.FC = () => {
   }, [map, dealerships]);
 
   return (
-    <div className="w-11/12 text-alt-black mt-60 rounded-tr-2xl rounded-br-2xl border-t-4 border-b-4 border-r-4 border-alt-black">
+    <div className="w-[93.5%] text-alt-black mt-60 rounded-tr-2xl rounded-br-2xl border-t-4 border-b-4 border-r-4 border-alt-black">
       <div className="flex">
         <motion.div
           className="w-full sm:w-4/6 h-[600px] sm:h-[650px] border-r-2 border-alt-black bg-white"

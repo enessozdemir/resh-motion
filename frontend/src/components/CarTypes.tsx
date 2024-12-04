@@ -60,22 +60,42 @@ export default function CarTypes() {
   }, []);
 
   return (
-    <div className="scroll-container text-alt-black mt-32 pl-28">
-      <h2 className="text-5xl font-bold">Araç sınıflarımız ile</h2>
-      <h2 className="text-silver text-5xl font-bold">
-        her bütçeye uygun çözümler.
-      </h2>
-      <p className="text-silver font-medium text-3xl w-[67%] mt-10 leading-normal">
-        Her ihtiyaca ve bütçeye uygun seçenekler sunarak{" "}
-        <span className="text-alt-black">konforlu</span>
-        <span className="text-alt-black"> ve pratik</span> bir sürüş deneyimini
-        kolayca yaşamanızı sağlıyoruz. Seyahatlerinizi daha keyifli hale
-        getirmek için buradayız.
-      </p>
+    <div className="scroll-container text-alt-black sm:mt-32 mt-[600px] sm:pl-28">
+      <div className="sm:block hidden">
+        <h2 className="sm:text-5xl text-3xl font-bold">
+          Araç sınıflarımız ile
+        </h2>
+        <h2 className="text-silver sm:text-5xl text-3xl font-bold">
+          her bütçeye uygun çözümler.
+        </h2>
+        <p className="text-silver font-medium sm:text-3xl text-xl sm:w-[67%] w-full mt-10 leading-normal">
+          Her ihtiyaca ve bütçeye uygun seçenekler sunarak{" "}
+          <span className="text-alt-black">konforlu</span>
+          <span className="text-alt-black"> ve pratik</span> bir sürüş
+          deneyimini kolayca yaşamanızı sağlıyoruz. Seyahatlerinizi daha keyifli
+          hale getirmek için buradayız.
+        </p>
+      </div>
 
       <div className="flex justify-end mt-20">
-        <div className="relative w-[94.5%] h-[975px] rounded-tl-2xl rounded-bl-2xl border-t-4 border-b-4 border-l-4 border-alt-black">
-          <div className="absolute top-44 -left-24 w-[610px] h-[610px] rounded-2xl border-4 border-alt-black">
+        <div className="relative sm:w-[94.5%] w-full h-[975px] border-y-4 sm:rounded-tl-2xl sm:rounded-bl-2xl sm:border-t-4 sm:border-b-4 sm:border-l-4 border-alt-black">
+          <div className="sm:hidden block px-5 pt-20">
+            <h2 className="sm:text-5xl text-3xl font-bold">
+              Araç sınıflarımız ile
+            </h2>
+            <h2 className="text-silver sm:text-5xl text-3xl font-bold">
+              her bütçeye uygun çözümler.
+            </h2>
+            <p className="text-silver font-medium sm:text-3xl text-2xl sm:w-[67%] w-full mt-10 leading-normal">
+              Her ihtiyaca ve bütçeye uygun seçenekler sunarak{" "}
+              <span className="text-alt-black">konforlu</span>
+              <span className="text-alt-black"> ve pratik</span> bir sürüş
+              deneyimini kolayca yaşamanızı sağlıyoruz. Seyahatlerinizi daha
+              keyifli hale getirmek için buradayız.
+            </p>
+          </div>
+
+          <div className="absolute top-44 -left-24 sm:w-[610px] sm:h-[610px] w-[300px] h-[300px] rounded-2xl border-4 border-alt-black">
             <div className="absolute w-[610px] h-[610px] border-r-8 border-b-8 border-alt-black rounded-2xl"></div>
             <img
               className="w-full h-full rounded-2xl car"

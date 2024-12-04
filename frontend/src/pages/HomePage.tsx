@@ -22,7 +22,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="text-alt-black py-20 px-5 sm:px-0 min-h-screen">
+    <div className="text-alt-black py-20 min-h-screen overflow-x-hidden">
       {/* <div>
         <h1 className="text-5xl font-semibold">Araçlar</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -42,20 +42,20 @@ export default function HomePage() {
             ))}
         </div>  
       </div> */}
-      <div className="flex flex-col container mx-auto gap-7 font-poppins leading-none mt-24">
-        <div className="flex flex-col gap-1 text-[76px] justify-center items-center font-bold">
+      <div className="flex flex-col container mx-auto gap-7 font-poppins leading-none sm:mt-24 mt-40">
+        <div className="flex flex-col gap-1 sm:text-[76px] text-[40px] justify-center items-center font-bold">
           <h1 className="text-silver">
             Türkiye'nin <span className="underline">#1</span>
           </h1>
           <h1 className="">Araç Kiralama Platformu</h1>
         </div>
-        <p className="font-gabarito text-2xl text-[rgb(129,129,129)] text-center">
+        <p className="font-gabarito sm:text-2xl text-xl text-silver text-center">
           Modern, yenilikçi ve bütçe dostu bir çözümle araç kiralama işlerinizi{" "}
-          <br />
+          <br className="sm:block hidden" />
           kolayca yönetin
         </p>
         <div className="text-center">
-          <button className="border border-brand-color rounded-full w-1/3 h-16 text-xl hover:text-white hover:bg-brand-color transition-all ease-in-out duration-300 py-3 px-10 ">
+          <button className="border border-brand-color rounded-full sm:w-1/3 w-2/3 sm:h-16 h-14 text-xl hover:text-white hover:bg-brand-color transition-all ease-in-out duration-300 py-3 px-10 ">
             Hemen Kirala
           </button>
         </div>

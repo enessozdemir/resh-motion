@@ -61,7 +61,7 @@ const Dealerships: React.FC = () => {
         key: API_KEY,
         container: mapElement.current,
         center: [35.17822, 39.55488],
-        zoom: 5,
+        zoom: 4.2,
         style:
           "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAZVM4OHRMeEtZdElMZllDajtlZWJmOWZjMy1hYTRiLTQ3YTAtOTkxZC0xMzU3ZjBmNmUyNzA=/drafts/0.json",
       });
@@ -123,10 +123,10 @@ const Dealerships: React.FC = () => {
   }, [map, dealerships]);
 
   return (
-    <div className="w-[93.5%] text-alt-black mt-60 rounded-tr-2xl rounded-br-2xl border-t-4 border-b-4 border-r-4 border-alt-black">
-      <div className="flex">
+    <div className="sm:w-[93.5%] w-full text-alt-black mt-60 border-y-4 sm:rounded-tr-2xl sm:rounded-br-2xl sm:border-t-4 sm:border-b-4 sm:border-r-4 border-alt-black">
+      <div className="flex flex-col sm:flex-row">
         <motion.div
-          className="w-full sm:w-4/6 h-[600px] sm:h-[650px] border-r-2 border-alt-black bg-white"
+          className="w-full sm:w-4/6 h-[400px] sm:h-[650px] border-b-2 sm:border-r-2 border-alt-black bg-white"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
@@ -134,8 +134,8 @@ const Dealerships: React.FC = () => {
           <div ref={mapElement} className="w-full h-full"></div>
         </motion.div>
 
-        <div className="w-2/6 mt-10 px-10">
-          <div className="flex flex-col gap-32">
+        <div className="sm:w-2/6 w-full mt-10 sm:px-10 px-5">
+          <div className="flex flex-col sm:gap-32 gap-24">
             <div className="flex flex-col">
               <div>
                 <h3 className="text-4xl font-bold">{dealershipInfos.name}</h3>
@@ -160,7 +160,7 @@ const Dealerships: React.FC = () => {
               </div>
             </div>
             <div>
-              <p className="text-2xl text-silver font-semibold">
+              <p className="sm:block hidden text-2xl text-silver font-semibold">
                 <span className="text-alt-black">Şubelerimiz,</span> şehir
                 merkezlerine yakın konumlarıyla size en hızlı ve kolay hizmeti
                 sunuyor.

@@ -32,6 +32,7 @@ const Dealerships: React.FC = () => {
     long: 29.15133,
     lat: 40.92928,
   });
+  const [isDesktop, SetIsDesktop] = useState(false);
 
   useEffect(() => {
     const getDealerships = async () => {
@@ -57,11 +58,16 @@ const Dealerships: React.FC = () => {
         return;
       }
 
+      const mediaQuery = window.matchMedia("(min-width: 1024px)");
+      const isDesktop = mediaQuery.matches;
+      SetIsDesktop(isDesktop);
+      const zoomLevel = isDesktop ? 5 : 3.9;
+
       const mapInstance = tt.map({
         key: API_KEY,
         container: mapElement.current,
         center: [35.17822, 39.55488],
-        zoom: 4.2,
+        zoom: zoomLevel,
         style:
           "https://api.tomtom.com/style/2/custom/style/dG9tdG9tQEBAZVM4OHRMeEtZdElMZllDajtlZWJmOWZjMy1hYTRiLTQ3YTAtOTkxZC0xMzU3ZjBmNmUyNzA=/drafts/0.json",
       });
@@ -138,7 +144,9 @@ const Dealerships: React.FC = () => {
           <div className="flex flex-col sm:gap-32 gap-24">
             <div className="flex flex-col">
               <div>
-                <h3 className="text-4xl font-bold">{dealershipInfos.name}</h3>
+                <h3 className="sm:text-4xl text-3xl font-bold">
+                  {dealershipInfos.name}
+                </h3>
                 <p className="text-silver text-lg leading-none">
                   {dealershipInfos.city}
                 </p>

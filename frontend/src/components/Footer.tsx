@@ -7,18 +7,11 @@ import {
 } from "flowbite-react";
 import { Link } from "react-router-dom";
 
-import {
-  PiXLogo,
-  PiLinkedinLogo,
-  PiGithubLogo,
-  PiInstagramLogo,
-  PiDiscordLogo,
-  PiFacebookLogo,
-} from "react-icons/pi";
+import { PiXLogo, PiInstagramLogo, PiFacebookLogo } from "react-icons/pi";
 
 export default function FooterCom() {
   return (
-    <div className="py-20 px-5 sm:px-0">
+    <div className="sm:py-20 py-5 px-5 sm:px-0">
       <div className="container mx-auto flex flex-col sm:flex-row">
         <div className="hidden sm:flex flex-col gap-y-3 flex-1">
           <Link

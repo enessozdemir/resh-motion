@@ -5,6 +5,7 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import HomePage from "./pages/HomePage";
 import AboutPage from "./pages/AboutPage";
+import ScrollToTop from "./components/ScrollToTop";
 // import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
 export default function Root() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <App />
     </BrowserRouter>
   );

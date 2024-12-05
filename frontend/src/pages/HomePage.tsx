@@ -22,7 +22,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="text-alt-black py-20 min-h-screen overflow-x-hidden">
+    <div className="text-alt-black sm:py-20 py-10 min-h-screen overflow-x-hidden">
       {/* <div>
         <h1 className="text-5xl font-semibold">Araçlar</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
@@ -43,7 +43,7 @@ export default function HomePage() {
         </div>  
       </div> */}
       <div className="flex flex-col container mx-auto gap-7 font-poppins leading-none sm:mt-24 mt-40">
-        <div className="flex flex-col gap-1 sm:text-[76px] text-[40px] justify-center items-center font-bold">
+        <div className="flex flex-col gap-1 sm:text-[76px] text-[30px] justify-center items-center font-bold">
           <h1 className="text-silver">
             Türkiye'nin <span className="underline">#1</span>
           </h1>

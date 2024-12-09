@@ -129,7 +129,7 @@ const Dealerships: React.FC = () => {
   }, [map, dealerships]);
 
   return (
-    <div className="sm:w-[93.5%] w-full text-alt-black border-y-4 sm:rounded-tr-2xl sm:rounded-br-2xl sm:border-t-4 sm:border-b-4 sm:border-r-4 border-alt-black">
+    <div className="sm:w-[93.5%] w-full sm:mt-0 mt-64 text-alt-black border-y-4 sm:rounded-tr-2xl sm:rounded-br-2xl sm:border-t-4 sm:border-b-4 sm:border-r-4 border-alt-black">
       <div className="flex flex-col sm:flex-row">
         <motion.div
           className="w-full sm:w-4/6 h-[400px] sm:h-[650px] border-b-2 sm:border-r-2 border-alt-black bg-white"

@@ -195,28 +195,12 @@ export default function Navbar() {
                 Araçlar
               </Link>
               <Link
-                to="/dealerships"
-                className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
-                  location.pathname === "/dealerships" && "bg-gray-50"
-                }`}
-              >
-                Bayiler
-              </Link>
-              <Link
                 to="/about"
                 className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
                   location.pathname === "/about" && "bg-gray-50"
                 }`}
               >
                 Hakkımızda
-              </Link>
-              <Link
-                to="/contact"
-                className={`w-[90%] text-lg py-3 rounded-md hover:bg-gray-50 text-center cursor-pointer transition-all duration-200 ease-linear ${
-                  location.pathname === "/contact" && "bg-gray-50"
-                }`}
-              >
-                İletişim
               </Link>
             </ul>
             <div className="flex justify-center gap-x-5">

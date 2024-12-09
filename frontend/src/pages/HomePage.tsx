@@ -63,7 +63,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      <div className="mt-16">
+      <div className="mt-16 sm:block hidden">
         <MotionPath />
       </div>
 

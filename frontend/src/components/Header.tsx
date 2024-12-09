@@ -24,6 +24,23 @@ export default function Navbar() {
   const firstName = currentUser?.name.split(" ")[0];
   const navigate = useNavigate();
 
+  const handleNavigateToDealerships = () => {
+    if (location.pathname !== "/home") {
+      navigate("/home");
+      setTimeout(() => {
+        const dealershipsElement = document.getElementById("dealershipsRef");
+        if (dealershipsElement) {
+          dealershipsElement.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 500);
+    } else {
+      const dealershipsElement = document.getElementById("dealershipsRef");
+      if (dealershipsElement) {
+        dealershipsElement.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -140,8 +157,8 @@ export default function Navbar() {
             Araçlar
           </a>
           <a
+            onClick={handleNavigateToDealerships}
             className="text-center pt-2 w-24 h-10 hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
-            href=""
           >
             Bayiler
           </a>
@@ -150,12 +167,6 @@ export default function Navbar() {
             to="/about"
           >
             Hakkımızda
-          </Link>
-          <Link
-            className="text-center pt-2 w-24 h-10 hover:bg-gray-100 rounded-lg transition-all ease-out duration-300"
-            to="/contact"
-          >
-            İletişim
           </Link>
         </div>
 

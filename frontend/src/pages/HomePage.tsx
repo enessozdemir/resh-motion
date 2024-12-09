@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import CarTypes from "../components/CarTypes";
 import Dealerships from "../components/Dealerships";
 import FeaturesSection from "../components/FeaturesSection";
+import MotionPath from "../components/MotionPath";
 
 export default function HomePage() {
   const [cars, setCars] = useState([]);
+  const dealershipsRef = useRef<HTMLDivElement | null>(null);
 
   const getCars = async () => {
     const response = await fetch("http://localhost:8080/cars");
@@ -61,6 +63,10 @@ export default function HomePage() {
         </div>
       </div>
 
+      <div className="mt-16">
+        <MotionPath />
+      </div>
+
       {/* <div className="w-full h-1/2 z-[-1] mt-20">
         <Lottie
           animationData={linesAnimation}
@@ -68,6 +74,7 @@ export default function HomePage() {
           style={{ width: "100%" }}
         />
       </div> */}
+      <div className="mb-20" id="dealershipsRef" ref={dealershipsRef}></div>
       <div>
         <Dealerships />
       </div>
